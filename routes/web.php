@@ -32,6 +32,3 @@ Route::get('/taskZoom', 'CleanderController@taskZoom');
 
 Route::get('/users', 'CleanderController@showUsers');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -7,10 +7,17 @@ use Illuminate\Http\Request;
 class CleanderController extends Controller
 {
     private $loginFormItems = ["email", "password"];
+    private $registerFormItems = ["email", "name", "password", "password_conf"];
 
     private $loginValidator = [
         "email" => "required|email|max:100",
         "password" => "required",
+    ];
+    private $registerValidator = [
+        "email" => "required|email|max:100|unique:users.email",
+        "name" => "required|email|max:20",
+        "password" => "required",
+        "password_conf" => "required",
     ];
 
     public function register() {
