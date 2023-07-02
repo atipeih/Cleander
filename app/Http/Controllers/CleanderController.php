@@ -49,6 +49,9 @@ class CleanderController extends Controller
     }
 
     public function login(Request $request) {
+        if(session()->has('id')){
+            return redirect()->action('TaskController@task');
+        }
         return view('util.login');
     }
 

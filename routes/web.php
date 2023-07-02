@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', 'CleanderController@login');
 Route::get('/logout', 'CleanderController@logout');
 Route::get('/login', 'CleanderController@login');
 Route::post('/login', 'CleanderController@loginValidate')->name("loginValidate");
