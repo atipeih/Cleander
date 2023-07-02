@@ -28,7 +28,7 @@
 				<option value="year" {{ old('cycle', $spanCycle[1]) == 'year' ? 'selected' : '' }}>年</option>
 			</select>
 			<p class="mt-4">メモ</p>
-			<textarea name="memo" id="memo" cols="30" rows="10">{{ old('memo') }}</textarea><br>
+			<textarea name="memo" id="memo" cols="30" rows="10">{{ old('memo', $task->memo) }}</textarea><br>
 			<button class="btn btn-light border"onclick="history.back">戻る</button>
 			<input class="btn btn-success" type="submit" value="保存">
 		</form>
