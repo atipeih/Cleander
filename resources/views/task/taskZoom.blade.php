@@ -1,62 +1,37 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>タスク詳細</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <div class="header">
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid"><a class="navbar-brand" href="#"><i class="bi bi-grid menu_button d-md-none"></i></a>
-      <h2 class="navbar-brand mb-0">Cleander</h2>
-      <p></p>
-      </div>
-    </nav>
-  </div>
-  <div class="container-fluid d-flex justify-content-center gap-5">
-    <div class="menu_container d-md-flex d-none">
-      <nav class="menu">
-        <h3>Menu</h3>
-        <div class="menu_item">
-          <ul>
-            <li><button class="btn btn-info mt-1">タスク管理</button></li>
-            <li><button class="btn btn-info mt-1">タイムライン</button></li>
-            <li><button class="btn btn-info mt-1">投稿</button></li>
-            <li><button class="btn btn-info mt-1">いいね</button></li>
-            <li><button class="btn btn-info mt-1">新規投稿</button></li>
-            <li><button class="btn btn-info mt-1">新規タスク</button></li>
-            <li><button class="btn btn-info mt-1">ユーザー管理</button></li>
-            <li><button class="btn btn-info mt-1">ログアウト</button></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  <div class="main_container flex-column ms-3">
-    <h2 class="page_title">タスク詳細</h2>
-    <button class="btn btn-danger task_delete position-absolute">削除</button>
-    <div class="main">
-        <form action="">
-            <p class="mt-4">タスク名</p>
-            <input class="" type="text" value="タスク名">
-            <p class="mt-4">周期</p>
-            <input type="text">
-            <select name="cycle" id="cycle">
-                <option value="day">日</option>
-                <option value="week">週</option>
-                <option value="month">ヵ月</option>
-                <option value="year">年</option>
-            </select>
-            <p>メモ</p>
-            <textarea name="memo" id="memo" cols="30" rows="10"></textarea><br>
-            <button class="btn btn-light border">戻る</button>
-            <input class="btn btn-success" type="button" value="保存">
-        </form>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-</html>
+
+@include('layouts.header')
+<div class="main_container flex-column ms-3">
+	<h2 class="page_title">タスク詳細</h2>
+	<a class="btn btn-danger task_delete position-absolute" href="/taskDelete?id={{ $task->id }}"onclick="confirm('{{ $task->name }}を削除しますか？')">削除</a>
+	<div class="main">
+		@if ($errors->any())
+		<div style="color:red;">
+			<ul class="error_list">
+			@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+			</ul>
+		</div>
+		@endif
+		<form action="/taskZoomUp" method="post">
+			@csrf
+            <input type="hidden" name="id" value="{{ $task->id }}">
+			<p class="mt-4">タスク名</p>
+			<input class="" type="text" name="name" id="name" value="{{ old('name', $task->name) }}" required>
+			<p class="mt-4">周期</p>
+            @php $spanCycle = explode(' ', $task->cycle); @endphp
+			<input type="number" name="span" id="span" value="{{ $spanCycle[0] }}" required>
+			<select name="cycle" id="cycle" required>
+				<option value="day" {{ old('cycle', $spanCycle[1]) == 'day' ? 'selected' : '' }}>日</option>
+				<option value="week" {{ old('cycle', $spanCycle[1]) == 'week' ? 'selected' : '' }}>週</option>
+				<option value="month" {{ old('cycle', $spanCycle[1]) == 'month' ? 'selected' : '' }}>ヵ月</option>
+				<option value="year" {{ old('cycle', $spanCycle[1]) == 'year' ? 'selected' : '' }}>年</option>
+			</select>
+			<p class="mt-4">メモ</p>
+			<textarea name="memo" id="memo" cols="30" rows="10">{{ old('memo') }}</textarea><br>
+			<button class="btn btn-light border"onclick="history.back">戻る</button>
+			<input class="btn btn-success" type="submit" value="保存">
+		</form>
+	</div>
+</div>
+@include('layouts.footer')

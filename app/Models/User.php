@@ -9,5 +9,6 @@ use Illuminate\Support\Facades\DB;
 class User extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $guarded = array('');
+    protected $table = 'users';
 }
