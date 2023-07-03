@@ -49,4 +49,4 @@ MAMP/MySQL/PHP（laravel）/JS(JQuery)
     likes
     categories
 
-お使いのphpMyAdminに上の
+お使いのphpMyAdminに上のSQLファイルをインポート
